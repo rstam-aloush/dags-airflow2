@@ -2,7 +2,7 @@
 # zefix_handelsregister.py
 This DAG updates the following datasets:
 
-- [100330](https://data.bs.ch/explore/dataset/None yet)
+- [100330](https://data.bs.ch/explore/dataset/100330)
 """
 
 from airflow import DAG
