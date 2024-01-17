@@ -15,7 +15,7 @@ default_args = {
     'description': 'Run the zefix-handelsregister docker container',
     'depend_on_past': False,
     'start_date': datetime(2024, 1, 12),
-    'email': ["orhan.saeedi@bs.ch"],
+    'email': ["jonas.bieri@bs.ch", "jonas.eckenfels@bs.ch", "orhan.saeedi@bs.ch", "nicolas.maire@bs.ch"],
     'email_on_failure': True,
     'email_on_retry': False,
     'retries': 0,
