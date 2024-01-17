@@ -35,9 +35,9 @@ with DAG('parlamentsdienst_gr_abstimmungen', default_args=default_args, schedule
         network_mode="bridge",
         tty=True,
         mounts=[{
-                        "Source": "/data/dev/workspace/data-processing",
-                        "Target": "/code/data-processing",
-                        "Type": "bind",
-                        "ReadOnly": False
-                }]
+            "Source": "/data/dev/workspace/data-processing",
+            "Target": "/code/data-processing",
+            "Type": "bind",
+            "ReadOnly": False
+        }]
     )
