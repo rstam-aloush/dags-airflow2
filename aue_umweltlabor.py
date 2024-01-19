@@ -67,9 +67,7 @@ with DAG('aue_umweltlabor', default_args=default_args, schedule_interval="0 6 * 
                 "Target": "/code/data-processing",
                 "Type": "bind",
                 "ReadOnly": False
-            }],
-        retry=5,
-        retry_delay=timedelta(minutes=5)
+            }]
     )
 
     process_upload >> ods_publish
