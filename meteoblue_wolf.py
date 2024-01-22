@@ -29,7 +29,7 @@ with DAG('meteoblue_wolf', default_args=default_args, schedule_interval="10 * * 
         image='meteoblue-wolf:latest',
         api_version='auto',
         auto_remove=True,
-        command='python3 -m meteoblue_wolf/etl ',
+        command='python3 -m meteoblue_wolf.etl',
         container_name='meteoblue-wolf',
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
