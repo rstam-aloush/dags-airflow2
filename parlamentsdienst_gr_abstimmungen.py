@@ -6,9 +6,8 @@ This DAG updates the following datasets:
 - [100188](https://data.bs.ch/explore/dataset/100188)
 """
 from airflow import DAG
-from airflow.operators.bash_operator import BashOperator
 from datetime import datetime, timedelta
-from airflow.operators.docker_operator import DockerOperator
+from airflow.providers.docker.operators.docker import DockerOperator
 from docker.types import Mount
 
 default_args = {
@@ -29,7 +28,7 @@ with DAG('parlamentsdienst_gr_abstimmungen', default_args=default_args, schedule
         task_id='upload',
         image='parlamentsdienst_gr_abstimmungen:latest',
         api_version='auto',
-        auto_remove=True,
+        auto_remove='force',
         command='python3 -m parlamentsdienst_gr_abstimmungen.etl',
         container_name='parlamentsdienst_gr_abstimmungen--upload',
         docker_url="unix://var/run/docker.sock",

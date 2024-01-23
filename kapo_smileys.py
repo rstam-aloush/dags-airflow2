@@ -7,9 +7,8 @@ This DAG updates the following datasets:
 """
 
 from airflow import DAG
-from airflow.operators.bash_operator import BashOperator
 from datetime import datetime, timedelta
-from airflow.operators.docker_operator import DockerOperator
+from airflow.providers.docker.operators.docker import DockerOperator
 from docker.types import Mount
 
 default_args = {
@@ -30,7 +29,7 @@ with DAG('kapo_smileys', default_args=default_args, schedule_interval="15 3 * * 
         task_id='upload',
         image='kapo_smileys:latest',
         api_version='auto',
-        auto_remove=True,
+        auto_remove='force',
         command='python3 -m kapo_smileys.etl',
         container_name='kapo_smileys--upload',
         docker_url="unix://var/run/docker.sock",

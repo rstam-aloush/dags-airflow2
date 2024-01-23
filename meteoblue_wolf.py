@@ -6,9 +6,8 @@ This DAG updates the following datasets:
 - [100082](https://data.bs.ch/explore/dataset/100082)
 """
 from airflow import DAG
-from airflow.operators.bash_operator import BashOperator
 from datetime import datetime, timedelta
-from airflow.operators.docker_operator import DockerOperator
+from airflow.providers.docker.operators.docker import DockerOperator
 from docker.types import Mount
 
 default_args = {
@@ -29,7 +28,7 @@ with DAG('meteoblue_wolf', default_args=default_args, schedule_interval="10 * * 
         task_id='process-upload',
         image='meteoblue-wolf:latest',
         api_version='auto',
-        auto_remove=True,
+        auto_remove='force',
         command='python3 -m meteoblue_wolf.etl',
         container_name='meteoblue-wolf',
         docker_url="unix://var/run/docker.sock",
@@ -42,7 +41,7 @@ with DAG('meteoblue_wolf', default_args=default_args, schedule_interval="10 * * 
         task_id='ods-publish',
         image='ods-publish:latest',
         api_version='auto',
-        auto_remove=True,
+        auto_remove='force',
         command='python3 -m ods_publish.etl_id 100009,100082',
         container_name='meteoblue-wolf--ods-publish',
         docker_url="unix://var/run/docker.sock",

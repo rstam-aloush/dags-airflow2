@@ -6,9 +6,8 @@ This DAG updates the following datasets:
 - [100323](https://data.bs.ch/explore/dataset/100323)
 """
 from airflow import DAG
-from airflow.operators.bash_operator import BashOperator
 from datetime import datetime, timedelta
-from airflow.operators.docker_operator import DockerOperator
+from airflow.providers.docker.operators.docker import DockerOperator
 from docker.types import Mount
 
 default_args = {
@@ -29,7 +28,7 @@ with DAG('aue_rues', default_args=default_args, schedule_interval="*/10 * * * *"
         task_id='upload',
         image='aue_rues:latest',
         api_version='auto',
-        auto_remove=True,
+        auto_remove='force',
         command='python3 -m aue_rues.etl',
         container_name='aue_rues--upload',
         docker_url="unix://var/run/docker.sock",

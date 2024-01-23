@@ -8,9 +8,8 @@ This DAG updates the following datasets:
 - [100181](https://data.bs.ch/explore/dataset/100181)
 """
 from airflow import DAG
-from airflow.operators.bash_operator import BashOperator
 from datetime import datetime, timedelta
-from airflow.operators.docker_operator import DockerOperator
+from airflow.providers.docker.operators.docker import DockerOperator
 from docker.types import Mount
 
 default_args = {
@@ -31,7 +30,7 @@ with DAG('aue_grundwasser', default_args=default_args, schedule_interval="25 5 *
         task_id='upload',
         image='aue_grundwasser:latest',
         api_version='auto',
-        auto_remove=True,
+        auto_remove='force',
         command='python3 -m aue_grundwasser.etl',
         container_name='aue_grundwasser--upload',
         docker_url="unix://var/run/docker.sock",

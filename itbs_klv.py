@@ -6,9 +6,8 @@ This DAG updates the following datasets:
 - [100325](https://data.bs.ch/explore/dataset/100325)
 """
 from airflow import DAG
-from airflow.operators.bash_operator import BashOperator
 from datetime import datetime, timedelta
-from airflow.operators.docker_operator import DockerOperator
+from airflow.providers.docker.operators.docker import DockerOperator
 from docker.types import Mount
 
 default_args = {
@@ -29,7 +28,7 @@ with DAG('itbs_klv', default_args=default_args, schedule_interval="0 */2 * * *",
         task_id='upload',
         image='itbs_klv:latest',
         api_version='auto',
-        auto_remove=True,
+        auto_remove='force',
         command='python3 -m itbs_klv.etl',
         container_name='itbs_klv--upload',
         docker_url="unix://var/run/docker.sock",

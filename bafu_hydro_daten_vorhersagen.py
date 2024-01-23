@@ -6,9 +6,8 @@ This DAG updates the following datasets:
 - [100272](https://data.bs.ch/explore/dataset/100272)
 """
 from airflow import DAG
-from airflow.operators.bash_operator import BashOperator
 from datetime import datetime, timedelta
-from airflow.operators.docker_operator import DockerOperator
+from airflow.providers.docker.operators.docker import DockerOperator
 from docker.types import Mount
 
 default_args = {
@@ -29,7 +28,7 @@ with DAG('bafu_hydrodaten_vorhersagen', default_args=default_args, schedule_inte
         task_id='upload',
         image='bafu_hydrodaten_vorhersagen:latest',
         api_version='auto',
-        auto_remove=True,
+        auto_remove='force',
         command='python3 -m bafu_hydrodaten_vorhersagen.etl',
         container_name='bafu_hydrodaten_vorhersagen',
         docker_url="unix://var/run/docker.sock",
