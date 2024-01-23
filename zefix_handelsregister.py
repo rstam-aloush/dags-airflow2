@@ -6,9 +6,8 @@ This DAG updates the following datasets:
 """
 
 from airflow import DAG
-from airflow.operators.bash_operator import BashOperator
 from datetime import datetime, timedelta
-from airflow.operators.docker_operator import DockerOperator
+from airflow.providers.docker.operators.docker import DockerOperator
 from docker.types import Mount
 
 default_args = {
@@ -29,7 +28,7 @@ with DAG('zefix_handelsregister', default_args=default_args, schedule_interval='
         task_id='upload',
         image='zefix_handelsregister:latest',
         api_version='auto',
-        auto_remove=True,
+        auto_remove='force',
         command='python3 -m zefix_handelsregister.etl ',
         container_name='zefix_handelsregister',
         docker_url="unix://var/run/docker.sock",
