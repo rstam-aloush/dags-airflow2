@@ -11,6 +11,7 @@ from airflow import DAG
 from airflow.operators.bash_operator import BashOperator
 from datetime import datetime, timedelta
 from airflow.operators.docker_operator import DockerOperator
+from docker.types import Mount
 
 default_args = {
     'owner': 'jonas.bieri',
@@ -36,19 +37,9 @@ with DAG('aue_umweltlabor', default_args=default_args, schedule_interval="0 6 * 
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
         tty=True,
-        mounts=[
-            {
-                "Source": "/data/dev/workspace/data-processing",
-                "Target": "/code/data-processing",
-                "Type": "bind",
-                "ReadOnly": False
-            },
-            {
-                "Source": "/mnt/OGD-DataExch/Umweltlabor",
-                "Target": "/code/data-processing/aue_umweltlabor/data_orig",
-                "Type": "bind",
-                "ReadOnly": False
-            }]
+        mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind"),
+                Mount(source="/mnt/OGD-DataExch/Umweltlabor", target="/code/data-processing/aue_umweltlabor/data_orig",
+                      type="bind")]
     )
 
     ods_publish = DockerOperator(
@@ -61,13 +52,7 @@ with DAG('aue_umweltlabor', default_args=default_args, schedule_interval="0 6 * 
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
         tty=True,
-        mounts=[
-            {
-                "Source": "/data/dev/workspace/data-processing",
-                "Target": "/code/data-processing",
-                "Type": "bind",
-                "ReadOnly": False
-            }]
+        mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
     )
 
     process_upload >> ods_publish
