@@ -11,15 +11,15 @@ from airflow.providers.docker.operators.docker import DockerOperator
 from docker.types import Mount
 
 default_args = {
-    'owner'                 : 'jonas.bieri',
-    'description'           : 'Run the aue_rues docker container',
-    'depend_on_past'        : False,
-    'start_date'            : datetime(2024, 1, 19),
-    'email'                 : ["jonas.bieri@bs.ch", "jonas.eckenfels@bs.ch", "orhan.saeedi@bs.ch", "nicolas.maire@bs.ch"],
-    'email_on_failure'      : True,
-    'email_on_retry'        : False,
-    'retries'               : 0,
-    'retry_delay'           : timedelta(minutes=15)
+    'owner': 'jonas.bieri',
+    'description': 'Run the aue_rues docker container',
+    'depend_on_past': False,
+    'start_date': datetime(2024, 1, 19),
+    'email': ["jonas.bieri@bs.ch", "jonas.eckenfels@bs.ch", "orhan.saeedi@bs.ch", "nicolas.maire@bs.ch"],
+    'email_on_failure': True,
+    'email_on_retry': False,
+    'retries': 0,
+    'retry_delay': timedelta(minutes=15)
 }
 
 with DAG('aue_rues', default_args=default_args, schedule_interval="*/10 * * * *", catchup=False) as dag:
@@ -36,4 +36,3 @@ with DAG('aue_rues', default_args=default_args, schedule_interval="*/10 * * * *"
         tty=True,
         mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
     )
-

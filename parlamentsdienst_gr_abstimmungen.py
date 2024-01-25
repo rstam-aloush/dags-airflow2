@@ -11,18 +11,19 @@ from airflow.providers.docker.operators.docker import DockerOperator
 from docker.types import Mount
 
 default_args = {
-    'owner'                 : 'jonas.bieri',
-    'description'           : 'Run the parlamentsdienst_gr_abstimmungen docker container',
-    'depend_on_past'        : False,
-    'start_date'            : datetime(2024, 1, 12),
-    'email'                 : ["jonas.bieri@bs.ch", "jonas.eckenfels@bs.ch", "orhan.saeedi@bs.ch", "nicolas.maire@bs.ch"],
-    'email_on_failure'      : True,
-    'email_on_retry'        : False,
-    'retries'               : 0,
-    'retry_delay'           : timedelta(minutes=15)
+    'owner': 'jonas.bieri',
+    'description': 'Run the parlamentsdienst_gr_abstimmungen docker container',
+    'depend_on_past': False,
+    'start_date': datetime(2024, 1, 12),
+    'email': ["jonas.bieri@bs.ch", "jonas.eckenfels@bs.ch", "orhan.saeedi@bs.ch", "nicolas.maire@bs.ch"],
+    'email_on_failure': True,
+    'email_on_retry': False,
+    'retries': 0,
+    'retry_delay': timedelta(minutes=15)
 }
 
-with DAG('parlamentsdienst_gr_abstimmungen', default_args=default_args, schedule_interval="*/2 * * * *", catchup=False) as dag:
+with DAG('parlamentsdienst_gr_abstimmungen', default_args=default_args, schedule_interval="*/2 * * * *",
+         catchup=False) as dag:
     dag.doc_md = __doc__
     upload_bag_datasets = DockerOperator(
         task_id='upload',
