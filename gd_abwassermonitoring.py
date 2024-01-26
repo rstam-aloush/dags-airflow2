@@ -29,7 +29,7 @@ with DAG('gd_abwassermonitoring', default_args=default_args, schedule_interval="
         image='gd_abwassermonitoring:latest',
         api_version='auto',
         auto_remove='force',
-        command='/bin/bash /code/data-processing/gd_abwassermonitoring/etl.sh ',
+        command='python3 -m gd_abwassermonitoring.etl',
         container_name='gd_abwassermonitoring--upload',
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
