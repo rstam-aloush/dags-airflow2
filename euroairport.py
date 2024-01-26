@@ -28,7 +28,7 @@ with DAG('euroairport', default_args=default_args, schedule_interval="0 8 * * *"
         image='euroairport:latest',
         api_version='auto',
         auto_remove='force',
-        command='/bin/bash /code/data-processing/euroairport/etl.sh ',
+        command='python3 -m euroairport.etl',
         container_name='euroairport',
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
