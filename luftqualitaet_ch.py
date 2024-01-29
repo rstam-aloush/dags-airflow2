@@ -31,7 +31,7 @@ with DAG('luftqualitaet_ch', default_args=default_args, schedule_interval="15 * 
         image='luftqualitaet_ch:latest',
         api_version='auto',
         auto_remove='force',
-        command='/bin/bash /code/data-processing/luftqualitaet_ch/etl.sh ',
+        command='python3 -m luftqualitaet_ch.src.etl',
         container_name='luftqualitaet_ch',
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
