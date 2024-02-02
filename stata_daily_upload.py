@@ -33,5 +33,5 @@ with DAG('stata_daily_upload', default_args=default_args, schedule_interval="*/1
         network_mode="bridge",
         tty=True,
         mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind"),
-                Mount(source="/mnt/OGD-DataExch:/code/data-processing/stata_daily_upload/data", type="bind")]
+                Mount(source="/mnt/OGD-DataExch", target="/code/data-processing/stata_daily_upload/data", type="bind")]
     )
