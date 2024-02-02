@@ -3,7 +3,7 @@
 This DAG helps populating the following datasets:
 
 - [100223](https://data.bs.ch/explore/dataset/100223)
-- [100224](https://data.bs.ch/explore/dataset/100224)
+- [100224](https://data.bs.ch/explore/dataset/100224) (depubliziert)
 """
 
 from airflow import DAG
