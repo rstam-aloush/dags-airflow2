@@ -37,7 +37,7 @@ with DAG('kapo_geschwindigkeitsmonitoring', default_args=default_args, schedule_
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
         tty=True,
-        volumes=[
-            '/mnt/OGD-DataExch/KaPo/VP-Geschwindigkeitsmonitoring:/code/data-processing/kapo_geschwindigkeitsmonitoring/data_orig',
-            '/data/dev/workspace/data-processing:/code/data-processing']
+        mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind"),
+                Mount(source="/mnt/OGD-DataExch/KaPo/VP-Geschwindigkeitsmonitoring",
+                      target="/code/data-processing/kapo_geschwindigkeitsmonitoring/data_orig", type="bind")]
     )
