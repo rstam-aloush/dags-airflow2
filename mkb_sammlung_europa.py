@@ -30,7 +30,7 @@ with DAG('mkb_sammlung_europa', default_args=default_args, schedule_interval=Non
         image='mkb_sammlung_europa:latest',
         api_version='auto',
         auto_remove='force',
-        command='/bin/bash /code/data-processing/mkb_sammlung_europa/etl.sh ',
+        command='python3 -m mkb_sammlung_europa.etl',
         container_name='mkb_sammlung_europa--upload',
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
