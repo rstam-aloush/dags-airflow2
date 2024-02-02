@@ -36,5 +36,5 @@ with DAG('mobilitaet_parkflaechen', default_args=default_args, schedule_interval
         tty=True,
         mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind"),
                 Mount(source="/mnt/OGD-DataExch/BVD-mobilitaet/Parkplatzkataster/Shape",
-                      target="/code/data/mobilitaet_parkflaechen/data_orig", type="bind")]
+                      target="/code/data-processing/mobilitaet_parkflaechen/data_orig", type="bind")]
     )
