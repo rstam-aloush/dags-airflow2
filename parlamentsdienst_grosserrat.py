@@ -21,7 +21,7 @@ default_args = {
     'owner': 'orhan.saeedi',
     'description': 'Run the parlamentsdienst_grosserrat docker container',
     'depend_on_past': False,
-    'start_date': datetime(2023, 8, 23),
+    'start_date': datetime(2024, 2, 2),
     'email': ["jonas.bieri@bs.ch", "jonas.eckenfels@bs.ch", "orhan.saeedi@bs.ch", "nicolas.maire@bs.ch"],
     'email_on_failure': True,
     'email_on_retry': False,
