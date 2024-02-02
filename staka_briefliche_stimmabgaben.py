@@ -15,7 +15,7 @@ default_args = {
     'owner': 'hester.pieters',
     'description': 'Run the staka_briefliche_stimmabgaben.py docker container',
     'depend_on_past': False,
-    'start_date': datetime(2022, 9, 6),
+    'start_date': datetime(2024, 2, 2),
     'email': ["jonas.bieri@bs.ch", "jonas.eckenfels@bs.ch", "orhan.saeedi@bs.ch", "nicolas.maire@bs.ch"],
     'email_on_failure': True,
     'email_on_retry': False,
