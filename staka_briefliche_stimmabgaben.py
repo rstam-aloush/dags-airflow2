@@ -4,7 +4,6 @@ This DAG helps populating the following datasets:
 
 - [100223](https://data.bs.ch/explore/dataset/100223)
 - [100224](https://data.bs.ch/explore/dataset/100224)
-
 """
 
 from airflow import DAG
@@ -37,6 +36,7 @@ with DAG('staka_briefliche_stimmabgaben_3', default_args=default_args, schedule_
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
         tty=True,
-        volumes=['/data/dev/workspace/data-processing:/code/data-processing',
-                 '/mnt/OGD-DataExch/staka-abstimmungen:/code/data-processing/staka_briefliche_stimmabgaben/data']
+        mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind"),
+                Mount(source="/mnt/OGD-DataExch/staka-abstimmungen",
+                      target="/code/data-processing/staka_briefliche_stimmabgaben/data", type="bind")]
     )
