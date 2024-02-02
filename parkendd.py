@@ -30,7 +30,7 @@ with DAG('parkendd', default_args=default_args, schedule_interval="0 * * * *", c
         image='parkendd:latest',
         api_version='auto',
         auto_remove='force',
-        command='/bin/bash /code/data-processing/parkendd/etl.sh ',
+        command='python3 -m parkendd.etl',
         container_name='parkendd',
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
