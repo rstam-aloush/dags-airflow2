@@ -34,5 +34,6 @@ with DAG('tba_wiese', default_args=default_args, schedule_interval="30 * * * *",
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
         tty=True,
-        mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
+        mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")],
+        dag_timeout=timedelta(minutes=50)
     )
