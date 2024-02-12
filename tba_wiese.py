@@ -22,7 +22,8 @@ default_args = {
     'retry_delay': timedelta(minutes=15)
 }
 
-with DAG('tba_wiese', default_args=default_args, schedule_interval="30 * * * *", catchup=False) as dag:
+with DAG('tba_wiese', default_args=default_args, schedule_interval="30 * * * *", catchup=False,
+         dagrun_timeout=timedelta(minutes=50)) as dag:
     dag.doc_md = __doc__
     upload_bag_datasets = DockerOperator(
         task_id='upload',
@@ -34,6 +35,5 @@ with DAG('tba_wiese', default_args=default_args, schedule_interval="30 * * * *",
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
         tty=True,
-        mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")],
-        timeout=50*60  # 50 minutes
+        mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
     )
