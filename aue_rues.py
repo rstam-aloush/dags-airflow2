@@ -35,5 +35,5 @@ with DAG('aue_rues', default_args=default_args, schedule_interval="*/10 * * * *"
         network_mode="bridge",
         tty=True,
         mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")],
-        dagrun_timeout=timedelta(minutes=8)
+        timeout=8*60  # 8 minutes
     )

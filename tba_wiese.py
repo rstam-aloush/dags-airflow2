@@ -35,5 +35,5 @@ with DAG('tba_wiese', default_args=default_args, schedule_interval="30 * * * *",
         network_mode="bridge",
         tty=True,
         mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")],
-        dag_timeout=timedelta(minutes=50)
+        timeout=50*60  # 50 minutes
     )
