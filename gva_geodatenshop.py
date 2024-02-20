@@ -27,7 +27,9 @@ with DAG('gva_geodatenshop', default_args=default_args, schedule_interval="0 5 *
         network_mode="bridge",
         tty=True,
         mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind"),
-                Mount(source="/mnt/OGD-GVA", target="/code/data-processing/gva_geodatenshop/data_orig", type="bind")]
+                Mount(source="/mnt/OGD-GVA", target="/code/data-processing/gva_geodatenshop/data_orig", type="bind"),
+                Mount(source="/mnt/OGD-DataExch/StatA/harvesters/GVA",
+                      target="/code/data-processing/staka_abstimmungen/data_harvester", type="bind")]
     )
 
     ods_harvest = DockerOperator(
