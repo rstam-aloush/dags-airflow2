@@ -4,6 +4,7 @@ This DAG updates the following datasets:
 
 - [100006](https://data.bs.ch/explore/dataset/100006)
 - [100013](https://data.bs.ch/explore/dataset/100013)
+- [100356](https://data.bs.ch/explore/dataset/100356)
 """
 
 from airflow import DAG
@@ -46,7 +47,7 @@ with DAG('mobilitaet_verkehrszaehldaten', default_args=default_args, schedule_in
         image='ods-publish:latest',
         api_version='auto',
         auto_remove='force',
-        command='python3 -m ods_publish.etl_id 100006,100013',
+        command='python3 -m ods_publish.etl_id 100006,100013,100356',
         container_name='mobilitaet_verkehrszaehldaten--ods-publish',
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
