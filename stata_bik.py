@@ -28,7 +28,7 @@ with DAG('staka_bik', default_args=default_args, schedule_interval="0 5 * * *",
 
     ods_publish = DockerOperator(
         task_id='ods-publish',
-        image='staka_bik:latest',
+        image='ods-publish:latest',
         api_version='auto',
         auto_remove='force',
         command='python3 -m ods_publish.etl_id 100003',
