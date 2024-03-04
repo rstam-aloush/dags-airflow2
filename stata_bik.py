@@ -22,17 +22,17 @@ default_args = {
     'retry_delay': timedelta(minutes=15)
 }
 
-with DAG('stata_bik', default_args=default_args, schedule_interval="0 5 * * *",
+with DAG('stata_bik', default_args=default_args, schedule_interval="0 10 * * *",
          catchup=False) as dag:
     dag.doc_md = __doc__
 
     ods_publish = DockerOperator(
-        task_id='ods-publish',
-        image='ods-publish:latest',
+        task_id='stata_bik',
+        image='stata_bik:latest',
         api_version='auto',
         auto_remove='force',
-        command='python3 -m ods_publish.etl_id 100003',
-        container_name='ods-publish',
+        command='python3 -m stata_bik.etl',
+        container_name='stata_bik',
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
         tty=True,
