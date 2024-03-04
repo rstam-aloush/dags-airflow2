@@ -1,5 +1,5 @@
 """
-# staka_bik
+# stata_bik
 This DAG updates the following datasets:
 
 - [100003](https://data.bs.ch/explore/dataset/100003)
@@ -12,7 +12,7 @@ from docker.types import Mount
 
 default_args = {
     'owner': 'orhan.saeedi',
-    'description': 'Run the staka_bik docker container',
+    'description': 'Run the stata_bik docker container',
     'depend_on_past': False,
     'start_date': datetime(2024, 3, 4),
     'email': ["jonas.bieri@bs.ch", "jonas.eckenfels@bs.ch", "orhan.saeedi@bs.ch", "nicolas.maire@bs.ch"],
@@ -22,7 +22,7 @@ default_args = {
     'retry_delay': timedelta(minutes=15)
 }
 
-with DAG('staka_bik', default_args=default_args, schedule_interval="0 5 * * *",
+with DAG('stata_bik', default_args=default_args, schedule_interval="0 5 * * *",
          catchup=False) as dag:
     dag.doc_md = __doc__
 
