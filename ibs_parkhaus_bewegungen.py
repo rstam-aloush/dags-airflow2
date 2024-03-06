@@ -12,7 +12,7 @@ from airflow.providers.docker.operators.docker import DockerOperator
 from docker.types import Mount
 
 default_args = {
-    'owner': 'hester.pieters',
+    'owner': 'orhan.saeedi',
     'description': 'Run the ibs_parkhaus_bewegungen.py docker container',
     'depend_on_past': False,
     'start_date': datetime(2024, 2, 2),
