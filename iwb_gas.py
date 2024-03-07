@@ -3,7 +3,7 @@
 This DAG updates the following datasets:
 
 - [100304](https://data.bs.ch/explore/dataset/100304)
-- [100358](https://data.bs.ch/explore/dataset/100358)
+- [100353](https://data.bs.ch/explore/dataset/100353)
 
 """
 from airflow import DAG
