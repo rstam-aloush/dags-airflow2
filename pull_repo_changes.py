@@ -25,5 +25,5 @@ with DAG('pull_repo_changes', default_args=default_args, schedule_interval=None,
     dag.doc_md = __doc__
     pull_changes = BashOperator(
         task_id='pull_repo_changes',
-        bash_command='source /code/data-processing/pull_repo_changes.sh'
+        bash_command='/data/dev/workspace/pull_changes.sh '
     )
