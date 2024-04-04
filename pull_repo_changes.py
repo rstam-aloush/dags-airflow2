@@ -26,5 +26,5 @@ with DAG('pull_repo_changes', default_args=default_args, schedule_interval=None,
 
     ods_publish = BashOperator(
         task_id='pull_repo_changes',
-        bash_command='python3 /code/data-processing/pull_repo_changes.py'
+        bash_command='source /code/data-processing/pull_repo_changes.sh'
     )
