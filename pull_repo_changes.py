@@ -6,9 +6,21 @@ This DAG pulls recent changes from the main/master branch of the following repos
 - [dags-airflow2](https://github.com/opendatabs/dags-airflow2)
 """
 
-from datetime import datetime
 from airflow import DAG
-from airflow.operators.bash import BashOperator
+from airflow.operators.python import PythonOperator
+from datetime import datetime
+import git
+
+
+def pull_repo(repo_path):
+    try:
+        repo = git.Repo(repo_path)
+        origin = repo.remotes.origin
+        origin.pull()
+        return f'Successfully pulled {repo_path}'
+    except Exception as e:
+        return f'Failed to pull {repo_path}: {str(e)}'
+
 
 default_args = {
     'owner': 'orhan.saeedi',
@@ -21,12 +33,15 @@ default_args = {
     'retries': 0,
 }
 
-with DAG('pull_repo_changes', default_args=default_args, schedule_interval=None, catchup=False) as dag:
-    dag.doc_md = __doc__
-    pull_changes = BashOperator(
-        task_id='pull_repo_changes',
-        bash_command="""
-        cd /data/dev/workspace/data-processing && git pull;
-        cd /data/dev/workspace/dags-airflow2 && git pull;
-        """
+with DAG('git_pull_repos', default_args=default_args, schedule_interval=None, catchup=False) as dag:
+    pull_data_processing = PythonOperator(
+        task_id='pull_data_processing',
+        python_callable=pull_repo,
+        op_kwargs={'repo_path': '/data/dev/workspace/data-processing'},
+    )
+
+    pull_dags_airflow2 = PythonOperator(
+        task_id='pull_dags_airflow2',
+        python_callable=pull_repo,
+        op_kwargs={'repo_path': '/data/dev/workspace/dags-airflow2'},
     )
