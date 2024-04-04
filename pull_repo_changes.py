@@ -25,5 +25,6 @@ with DAG('pull_repo_changes', default_args=default_args, schedule_interval=None,
     dag.doc_md = __doc__
     pull_changes = BashOperator(
         task_id='pull_repo_changes',
-        bash_command='/data/dev/workspace/pull_changes.sh'
+        # Use the bash -c command to ensure Airflow doesn't attempt Jinja templating on the script path
+        bash_command='bash -c "/data/dev/workspace/pull_changes.sh"'
     )
