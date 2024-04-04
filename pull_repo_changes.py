@@ -12,7 +12,7 @@ from airflow.operators.bash import BashOperator
 
 default_args = {
     'owner': 'orhan.saeedi',
-    'description': 'Run the bash script to pull changes',
+    'description': 'Run git pull on multiple repositories',
     'depend_on_past': False,
     'start_date': datetime(2024, 4, 4),
     'email': ["jonas.bieri@bs.ch", "jonas.eckenfels@bs.ch", "orhan.saeedi@bs.ch", "nicolas.maire@bs.ch"],
@@ -25,6 +25,8 @@ with DAG('pull_repo_changes', default_args=default_args, schedule_interval=None,
     dag.doc_md = __doc__
     pull_changes = BashOperator(
         task_id='pull_repo_changes',
-        # Use the bash -c command to ensure Airflow doesn't attempt Jinja templating on the script path
-        bash_command='bash -c "/data/dev/workspace/pull_changes.sh"'
+        bash_command="""
+        cd /data/dev/workspace/data-processing && git pull;
+        cd /data/dev/workspace/dags-airflow2 && git pull;
+        """
     )
