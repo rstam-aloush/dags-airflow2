@@ -22,7 +22,7 @@ default_args = {
     'retry_delay': timedelta(minutes=15)
 }
 
-with DAG('stata_bik', default_args=default_args, schedule_interval="0 10 * * *",
+with DAG('stata_bik', default_args=default_args, schedule_interval="*/15 * * * *",
          catchup=False) as dag:
     dag.doc_md = __doc__
 
