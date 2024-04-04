@@ -31,7 +31,7 @@ with DAG('stata_pull_changes', default_args=default_args, schedule_interval=None
         image='stata_pull_changes:latest',
         api_version='auto',
         auto_remove='force',
-        command='/bin/bash /code/data-processing/stata_pull_changes/pull_changes.sh',
+        command='/bin/bash /code/data-processing/stata_pull_changes/pull_changes.sh ',
         container_name='stata_pull_changes',
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
