@@ -23,8 +23,7 @@ default_args = {
 
 with DAG('pull_repo_changes', default_args=default_args, schedule_interval=None, catchup=False) as dag:
     dag.doc_md = __doc__
-
-    ods_publish = BashOperator(
+    pull_changes = BashOperator(
         task_id='pull_repo_changes',
         bash_command='source /code/data-processing/pull_repo_changes.sh'
     )
