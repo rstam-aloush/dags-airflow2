@@ -27,7 +27,7 @@ default_args = {
 with DAG('stata_pull_changes', default_args=default_args, schedule_interval=None, catchup=False) as dag:
     dag.doc_md = __doc__
     git_pull = DockerOperator(
-        task_id='stata_pull_changes',
+        task_id='git_pull',
         image='stata_pull_changes:latest',
         api_version='auto',
         auto_remove='force',
