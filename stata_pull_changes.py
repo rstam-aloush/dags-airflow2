@@ -10,7 +10,9 @@ from airflow import DAG
 from datetime import datetime, timedelta
 from airflow.providers.docker.operators.docker import DockerOperator
 from docker.types import Mount
+from airflow.models import Variable
 
+https_proxy = Variable.get("https_proxy")
 
 default_args = {
     'owner': 'orhan.saeedi',
@@ -31,6 +33,7 @@ with DAG('stata_pull_changes', default_args=default_args, schedule_interval=None
         image='stata_pull_changes:latest',
         api_version='auto',
         auto_remove='force',
+        environment={'https_proxy': https_proxy},
         command='/bin/bash /code/data-processing/stata_pull_changes/pull_changes.sh ',
         container_name='stata_pull_changes',
         docker_url="unix://var/run/docker.sock",
