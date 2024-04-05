@@ -12,6 +12,7 @@ from airflow.providers.docker.operators.docker import DockerOperator
 from docker.types import Mount
 from airflow.models import Variable
 
+# This is set in the Airflow UI under Admin -> Variables
 https_proxy = Variable.get("https_proxy")
 
 default_args = {
