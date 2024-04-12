@@ -5,9 +5,11 @@ This DAG updates the following datasets:
 - [100352](https://data.bs.ch/explore/dataset/100352)
 """
 
+import time
 from airflow import DAG
 from datetime import datetime, timedelta
 from airflow.providers.docker.operators.docker import DockerOperator
+from airflow.operators.python import PythonOperator
 from docker.types import Mount
 
 default_args = {
@@ -22,7 +24,7 @@ default_args = {
     'retry_delay': timedelta(minutes=15)
 }
 
-with DAG('staka_kantonsblatt', default_args=default_args, schedule_interval='0 8/12 * * *',
+with DAG('staka_kantonsblatt', default_args=default_args, schedule_interval='30 0 * * *',
          catchup=False) as dag:
     dag.doc_md = __doc__
     upload_kantonsblatt = DockerOperator(
@@ -38,6 +40,10 @@ with DAG('staka_kantonsblatt', default_args=default_args, schedule_interval='0 8
         mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
     )
 
+    # https://stackoverflow.com/questions/55002234/apache-airflow-delay-a-task-for-some-period-of-time
+    delay_python_task: PythonOperator = PythonOperator(task_id="delay_python_task",
+                                                       python_callable=lambda: time.sleep(300))
+
     upload_baupublikation = DockerOperator(
         task_id='upload_baupublikation',
         image='staka_kantonsblatt:latest',
@@ -51,4 +57,4 @@ with DAG('staka_kantonsblatt', default_args=default_args, schedule_interval='0 8
         mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
     )
 
-    upload_kantonsblatt >> upload_baupublikation
+    upload_kantonsblatt >> delay_python_task >> upload_baupublikation
