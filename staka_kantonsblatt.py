@@ -25,15 +25,30 @@ default_args = {
 with DAG('staka_kantonsblatt', default_args=default_args, schedule_interval='0 8/12 * * *',
          catchup=False) as dag:
     dag.doc_md = __doc__
-    upload = DockerOperator(
-        task_id='upload',
+    upload_kantonsblatt = DockerOperator(
+        task_id='upload_kantonsblatt',
         image='staka_kantonsblatt:latest',
         api_version='auto',
         auto_remove='force',
-        command='python3 -m staka_kantonsblatt.etl',
+        command='python3 -m staka_kantonsblatt.src.etl',
         container_name='staka_kantonsblatt',
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
         tty=True,
         mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
     )
+
+    upload_baupublikation = DockerOperator(
+        task_id='upload_baupublikation',
+        image='staka_kantonsblatt:latest',
+        api_version='auto',
+        auto_remove='force',
+        command='python3 -m staka_kantonsblatt.src.etl_baupub',
+        container_name='staka_kantonsblatt',
+        docker_url="unix://var/run/docker.sock",
+        network_mode="bridge",
+        tty=True,
+        mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
+    )
+
+    upload_kantonsblatt >> upload_baupublikation
