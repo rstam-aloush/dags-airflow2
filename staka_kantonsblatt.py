@@ -32,7 +32,7 @@ with DAG('staka_kantonsblatt', default_args=default_args, schedule_interval='30 
         image='staka_kantonsblatt:latest',
         api_version='auto',
         auto_remove='force',
-        command='python3 -m staka_kantonsblatt.src.etl',
+        command='python3 -m staka_kantonsblatt.etl',
         container_name='staka_kantonsblatt',
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
@@ -41,16 +41,17 @@ with DAG('staka_kantonsblatt', default_args=default_args, schedule_interval='30 
     )
 
     # https://stackoverflow.com/questions/55002234/apache-airflow-delay-a-task-for-some-period-of-time
+    # Wait for 30 minutes for data to be updated
     delay_python_task: PythonOperator = PythonOperator(task_id="delay_python_task",
-                                                       python_callable=lambda: time.sleep(300))
+                                                       python_callable=lambda: time.sleep(1800))
 
     upload_baupublikation = DockerOperator(
         task_id='upload_baupublikation',
-        image='staka_kantonsblatt:latest',
+        image='staka_baupublikationen:latest',
         api_version='auto',
         auto_remove='force',
-        command='python3 -m staka_kantonsblatt.src.etl_baupub',
-        container_name='staka_kantonsblatt',
+        command='python3 -m staka_baupublikationen.etl',
+        container_name='staka_baupublikationen',
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
         tty=True,
