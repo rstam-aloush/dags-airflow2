@@ -23,7 +23,7 @@ default_args = {
     'retry_delay': timedelta(minutes=15)
 }
 
-with DAG('ibs_parkhaus_bewegungen', default_args=default_args, schedule_interval=None, catchup=False) as dag:
+with DAG('ibs_parkhaus_bewegungen', default_args=default_args, schedule_interval='0 1 * * *', catchup=False) as dag:
     dag.doc_md = __doc__
     upload = DockerOperator(
         task_id='upload',
@@ -36,6 +36,6 @@ with DAG('ibs_parkhaus_bewegungen', default_args=default_args, schedule_interval
         network_mode="bridge",
         tty=True,
         mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind"),
-                Mount(source="/mnt/OGD-DataExch/FD-immobilienbs/IBS_Parkhaus_Bewegungen",
+                Mount(source="/mnt/OGD-DataExch/ibs-parkhaeuser/Ein-Ausfahrten",
                       target="/code/data-processing/ibs_parkhaus_bewegungen/data_orig", type="bind")]
     )
