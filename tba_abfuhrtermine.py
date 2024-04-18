@@ -39,18 +39,3 @@ with DAG('tba_abfuhrtermine', default_args=default_args, schedule_interval="0 10
                       target="/code/data-processing/tba_abfuhrtermine/data", type="bind"),
                 Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
     )
-
-    ods_publish = DockerOperator(
-        task_id='ods-publish',
-        image='ods-publish:latest',
-        api_version='auto',
-        auto_remove='force',
-        command='python3 -m ods_publish.etl_id 100096',
-        container_name='tba-abfuhrtermine--ods-publish',
-        docker_url="unix://var/run/docker.sock",
-        network_mode="bridge",
-        tty=True,
-        mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
-    )
-
-    process_upload >> ods_publish
