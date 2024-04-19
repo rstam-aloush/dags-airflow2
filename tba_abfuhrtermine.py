@@ -35,7 +35,5 @@ with DAG('tba_abfuhrtermine', default_args=default_args, schedule_interval="0 10
         network_mode="bridge",
         tty=True,
         mounts=[Mount(source="/mnt/OGD-GVA", target="/code/data-processing/tba_abfuhrtermine/data_orig", type="bind"),
-                Mount(source="/mnt/OGD-DataExch/TBA/Abfuhrtermine",
-                      target="/code/data-processing/tba_abfuhrtermine/data", type="bind"),
                 Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
     )
