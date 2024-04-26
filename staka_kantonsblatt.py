@@ -37,7 +37,9 @@ with DAG('staka_kantonsblatt', default_args=default_args, schedule_interval='30 
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
         tty=True,
-        mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
+        mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind"),
+                Mount(source="/mnt/OGD-DataExch/StatA/Staatskanzlei/Kantonsblatt",
+                      target="/code/data-processing/staka_kantonsblatt/data", type="bind")]
     )
 
     # https://stackoverflow.com/questions/55002234/apache-airflow-delay-a-task-for-some-period-of-time
