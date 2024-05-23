@@ -2,7 +2,7 @@
 # tba_baustellen
 This DAG updates the following datasets:
 
-- [100359](https://data.bs.ch/explore/dataset/100359)
+- [100335](https://data.bs.ch/explore/dataset/100335)
 """
 from airflow import DAG
 from datetime import datetime, timedelta
