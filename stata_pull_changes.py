@@ -4,6 +4,7 @@ This DAG pulls recent changes from the main/master branch of the following repos
 
 - [data-processing](https://github.com/opendatabs/data-processing)
 - [dags-airflow2](https://github.com/opendatabs/dags-airflow2)
+- [startercode-opendatabs](https://github.com/opendatabs/startercode-generator-bs)
 """
 
 from airflow import DAG
