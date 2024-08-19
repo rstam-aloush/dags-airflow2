@@ -21,7 +21,7 @@ default_args = {
     'description': 'Run git pull on multiple repositories',
     'depend_on_past': False,
     'start_date': datetime(2024, 4, 4),
-    'email': ["jonas.bieri@bs.ch", "jonas.eckenfels@bs.ch", "orhan.saeedi@bs.ch", "nicolas.maire@bs.ch"],
+    'email': ["jonas.bieri@bs.ch", "jonas.eckenfels@bs.ch", "orhan.saeedi@bs.ch", "nicolas.maire@bs.ch", "rstam.aloush@bs.ch"],
     'email_on_failure': True,
     'email_on_retry': False,
     'retries': 0,

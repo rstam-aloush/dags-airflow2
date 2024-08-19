@@ -14,14 +14,14 @@ default_args = {
     'description': 'Run the tba_sprayereien docker container',
     'depend_on_past': False,
     'start_date': datetime(2024, 8, 19),
-    'email': ["jonas.bieri@bs.ch", "jonas.eckenfels@bs.ch", "orhan.saeedi@bs.ch", "nicolas.maire@bs.ch"],
+    'email': ["jonas.bieri@bs.ch", "jonas.eckenfels@bs.ch", "orhan.saeedi@bs.ch", "nicolas.maire@bs.ch", "rstam.aloush@bs.ch"],
     'email_on_failure': True,
     'email_on_retry': False,
     'retries': 0,
     'retry_delay': timedelta(minutes=15)
 }
 
-with DAG('tba_sprayereien', default_args=default_args, schedule_interval="*/15 * * * *", catchup=False) as dag:
+with DAG('tba_sprayereien', default_args=default_args, schedule_interval="0 * * * *", catchup=False) as dag:
     dag.doc_md = __doc__
     upload = DockerOperator(
         task_id='upload',

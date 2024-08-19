@@ -16,7 +16,7 @@ default_args = {
     'description': 'Run the iwb_netzlast.py docker container',
     'depend_on_past': False,
     'start_date': datetime(2024, 1, 25),
-    'email': ["jonas.bieri@bs.ch", "jonas.eckenfels@bs.ch", "orhan.saeedi@bs.ch", "nicolas.maire@bs.ch"],
+    'email': ["jonas.bieri@bs.ch", "jonas.eckenfels@bs.ch", "orhan.saeedi@bs.ch", "nicolas.maire@bs.ch", "rstam.aloush@bs.ch"],
     'email_on_failure': True,
     'email_on_retry': False,
     'retries': 0,
