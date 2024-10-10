@@ -15,7 +15,8 @@ default_args = {
     'description': 'Run the fgi_geodatenshop docker container',
     'depend_on_past': False,
     'start_date': datetime(2024, 9, 25),
-    'email': ["jonas.bieri@bs.ch", "jonas.eckenfels@bs.ch", "orhan.saeedi@bs.ch", "nicolas.maire@bs.ch", "rstam.aloush@bs.ch"],
+    'email': ["jonas.bieri@bs.ch", "jonas.eckenfels@bs.ch", "orhan.saeedi@bs.ch",
+               "nicolas.maire@bs.ch", "rstam.aloush@bs.ch", "renato.farruggio@bs.ch"],
     'email_on_failure': True,
     'email_on_retry': False,
     'retries': 0,
@@ -37,5 +38,5 @@ with DAG('fgi_geodatenshop', default_args=default_args, schedule_interval='*/30 
         tty=True,
         mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind"),
                 Mount(source="/mnt/OGD-DataExch/StatA/harvesters/FGI",
-                      target="/code/data-processing/gva_geodatenshop/data_harvester", type="bind")]
+                      target="/code/data-processing/fgi_geodatenshop/data_harvester", type="bind")]
     )
