@@ -32,6 +32,8 @@ default_args = {
 with DAG('startercode-generator-bs', default_args=default_args, schedule_interval='0 8/12 * * *',
          catchup=False) as dag:
     dag.doc_md = __doc__
+
+    # Update task
     update = DockerOperator(
         task_id='update',
         image='startercode-generator-bs:latest',
@@ -45,6 +47,7 @@ with DAG('startercode-generator-bs', default_args=default_args, schedule_interva
         mounts=[Mount(source="/data/dev/workspace/startercode-generator-bs", target="/code/startercode-generator-bs", type="bind")]
     )
 
+    # GitHub update task
     update_github = DockerOperator(
         task_id='update_github',
         image='update_github:latest',
@@ -59,4 +62,21 @@ with DAG('startercode-generator-bs', default_args=default_args, schedule_interva
         mounts=[Mount(source="/data/dev/workspace/startercode-generator-bs", target="/code/startercode-generator-bs", type="bind")]
     )
 
+    # Renku update task
+    update_renku = DockerOperator(
+        task_id='update_renku',
+        image='update_renku:latest',
+        api_version='auto',
+        auto_remove='force',
+        environment={'https_proxy': https_proxy},
+        command='/bin/bash /code/startercode-generator-bs/update_renku.sh ',
+        container_name='update_renku',
+        docker_url="unix://var/run/docker.sock",
+        network_mode="bridge",
+        tty=True,
+        mounts=[Mount(source="/data/dev/workspace/startercode-generator-bs", target="/code/startercode-generator-bs", type="bind")]
+    )
+
+    # Task dependencies
     update >> update_github
+    update >> update_renku
