@@ -40,3 +40,18 @@ with DAG('fgi_geodatenshop', default_args=default_args, schedule_interval='*/30 
                 Mount(source="/mnt/OGD-DataExch/StatA/harvesters/FGI",
                       target="/code/data-processing/fgi_geodatenshop/data_harvester", type="bind")]
     )
+
+    ods_harvest = DockerOperator(
+        task_id='ods-harvest',
+        image='ods-harvest:latest',
+        api_version='auto',
+        auto_remove='force',
+        command='python3 -m ods_harvest.etl gva-gpkg-ftp-csv',
+        container_name='fgi_geodatenshop--ods-harvest',
+        docker_url="unix://var/run/docker.sock",
+        network_mode="bridge",
+        tty=True,
+        mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
+    )
+
+upload >> ods_harvest
