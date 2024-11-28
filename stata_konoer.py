@@ -20,7 +20,7 @@ default_args = {
     'retries': 0,
     'retry_delay': timedelta(minutes=15)
 }
-with DAG('iwb_gas', default_args=default_args, schedule_interval="0 10 * * *", catchup=False) as dag:
+with DAG('stata_konoer', default_args=default_args, schedule_interval="0 10 * * *", catchup=False) as dag:
     transform = DockerOperator(
         task_id='transform',
         image='stata_konoer:latest',
