@@ -22,16 +22,16 @@ default_args = {
 }
 with DAG('iwb_gas', default_args=default_args, schedule_interval="0 10 * * *", catchup=False) as dag:
     transform = DockerOperator(
-            task_id='transform',
-            image='stata_konoer:latest',
-            api_version='auto',
-            auto_remove='force',
-            command='Rscript /code/data-processing/stata_konoer/etl.R',
-            container_name='stata_konoer--transform',
-            docker_url="unix://var/run/docker.sock",
-            network_mode="bridge",
-            tty=True,
-            mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind"),
-                    Mount(source="/mnt/OGD-DataExch/StatA/KoNör",
-                          target="/code/data-processing/stata_konoer/data", type="bind")]
-        )
+        task_id='transform',
+        image='stata_konoer:latest',
+        api_version='auto',
+        auto_remove='force',
+        command='Rscript /code/data-processing/stata_konoer/etl.R',
+        container_name='stata_konoer--transform',
+        docker_url="unix://var/run/docker.sock",
+        network_mode="bridge",
+        tty=True,
+        mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind"),
+                Mount(source="/mnt/OGD-DataExch/StatA/KoNör",
+                      target="/code/data-processing/stata_konoer/data", type="bind")]
+    )
