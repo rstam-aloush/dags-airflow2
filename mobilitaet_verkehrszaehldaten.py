@@ -56,4 +56,19 @@ with DAG('mobilitaet_verkehrszaehldaten', default_args=default_args, schedule_in
         mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")],
     )
 
+    rsync = DockerOperator(
+        task_id='rsync',
+        image='rsync:latest',
+        api_version='auto',
+        auto_remove='force',
+        command='python3 -m rsync.sync_files mobilitaet_verkehrszaehldaten.json',
+        container_name='mobilitaet_verkehrszaehldaten--rsync',
+        docker_url="unix://var/run/docker.sock",
+        network_mode="bridge",
+        tty=True,
+        mounts=[Mount(source="/home/syncuser/.ssh/id_rsa", target="/root/.ssh/id_rsa", type="bind"),
+                Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
+    )
+
     upload >> ods_publish
+    upload >> rsync
