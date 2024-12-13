@@ -42,7 +42,7 @@ with DAG('stata_konoer', default_args=default_args, schedule_interval="0 10 * * 
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
         tty=True,
-        mounts=[Mount(source="/home/syncuser/.ssh/id_rsa", target="/root/.ssh/id_rsa:ro", type="bind"),
+        mounts=[Mount(source="/home/syncuser/.ssh/id_rsa", target="/root/.ssh/id_rsa", type="bind"),
                 Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
     )
 
@@ -56,7 +56,7 @@ with DAG('stata_konoer', default_args=default_args, schedule_interval="0 10 * * 
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
         tty=True,
-        mounts=[Mount(source="/home/syncuser/.ssh/id_rsa", target="/root/.ssh/id_rsa:ro", type="bind"),
+        mounts=[Mount(source="/home/syncuser/.ssh/id_rsa", target="/root/.ssh/id_rsa", type="bind"),
                 Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
     )
 
