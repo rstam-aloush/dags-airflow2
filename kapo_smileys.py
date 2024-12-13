@@ -26,7 +26,7 @@ default_args = {
 
 with DAG('kapo_smileys', default_args=default_args, schedule_interval="15 3 * * *", catchup=False) as dag:
     dag.doc_md = __doc__
-    upload_bag_datasets = DockerOperator(
+    upload = DockerOperator(
         task_id='upload',
         image='kapo_smileys:latest',
         api_version='auto',
@@ -40,3 +40,19 @@ with DAG('kapo_smileys', default_args=default_args, schedule_interval="15 3 * * 
                 Mount(source="/mnt/OGD-DataExch/kapo-smileys", target="/code/data-processing/kapo_smileys/data_orig",
                       type="bind")]
     )
+
+    rsync = DockerOperator(
+        task_id='rsync',
+        image='rsync:latest',
+        api_version='auto',
+        auto_remove='force',
+        command='python3 -m rsync.sync_files kapo_smileys.json',
+        container_name='kapo_smileys--rsync',
+        docker_url="unix://var/run/docker.sock",
+        network_mode="bridge",
+        tty=True,
+        mounts=[Mount(source="/home/syncuser/.ssh/id_rsa", target="/root/.ssh/id_rsa", type="bind"),
+                Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
+    )
+
+    upload >> rsync
