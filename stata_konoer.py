@@ -29,7 +29,35 @@ with DAG('stata_konoer', default_args=default_args, schedule_interval="0 10 * * 
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
         tty=True,
-        mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind"),
-                Mount(source="/mnt/OGD-DataExch/StatA/KoNör",
-                      target="/code/data-processing/stata_konoer/data", type="bind")]
+        mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
     )
+
+    rsync1 = DockerOperator(
+        task_id='rsync1',
+        image='rsync:latest',
+        api_version='auto',
+        auto_remove='force',
+        command='python3 -m /code/data-processing/rsync/rsync.py stata_konoer1.json',
+        container_name='stata_konoer--rsync',
+        docker_url="unix://var/run/docker.sock",
+        network_mode="bridge",
+        tty=True,
+        mounts=[Mount(source="/home/syncuser/.ssh/id_rsa", target="/root/.ssh/id_rsa:ro", type="bind"),
+                Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
+    )
+
+    rsync2 = DockerOperator(
+        task_id='rsync2',
+        image='rsync:latest',
+        api_version='auto',
+        auto_remove='force',
+        command='python3 -m /code/data-processing/rsync/rsync.py stata_konoer2.json',
+        container_name='stata_konoer--rsync',
+        docker_url="unix://var/run/docker.sock",
+        network_mode="bridge",
+        tty=True,
+        mounts=[Mount(source="/home/syncuser/.ssh/id_rsa", target="/root/.ssh/id_rsa:ro", type="bind"),
+                Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
+    )
+
+    transform >> rsync1 >> rsync2
