@@ -43,7 +43,7 @@ with DAG('stata_konoer', default_args=default_args, schedule_interval="0 10 * * 
         network_mode="bridge",
         tty=True,
         mounts=[Mount(source="/home/syncuser/.ssh/id_rsa", target="/root/.ssh/id_rsa", type="bind"),
-                Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
+                Mount(source="/data/dev/workspace/rsync", target="/code/rsync", type="bind")]
     )
 
     rsync_prod = DockerOperator(
@@ -57,7 +57,7 @@ with DAG('stata_konoer', default_args=default_args, schedule_interval="0 10 * * 
         network_mode="bridge",
         tty=True,
         mounts=[Mount(source="/home/syncuser/.ssh/id_rsa", target="/root/.ssh/id_rsa", type="bind"),
-                Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind")]
+                Mount(source="/data/dev/workspace/rsync", target="/code/rsync", type="bind")]
     )
 
     transform >> rsync_test >> rsync_prod
