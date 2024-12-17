@@ -67,7 +67,7 @@ with DAG('mobilitaet_verkehrszaehldaten', default_args=default_args, schedule_in
         network_mode="bridge",
         tty=True,
         mounts=[Mount(source="/home/syncuser/.ssh/id_rsa", target="/root/.ssh/id_rsa", type="bind"),
-                Mount(source="/data/dev/workspace/rsync", target="/code/rsync", type="bind")]
+                Mount(source="/data/dev/workspace", target="/code", type="bind")]
     )
 
     upload >> ods_publish
