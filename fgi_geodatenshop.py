@@ -24,7 +24,7 @@ default_args = {
 }
 
 
-with DAG('fgi_geodatenshop', default_args=default_args, schedule_interval='*/30 * * * *', catchup=False) as dag:
+with DAG('fgi_geodatenshop', default_args=default_args, schedule_interval='0 */2 * * *', catchup=False) as dag:
     dag.doc_md = __doc__
     upload = DockerOperator(
         task_id='upload',
