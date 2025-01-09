@@ -17,9 +17,9 @@ default_args = {
     'email': ["jonas.bieri@bs.ch", "jonas.eckenfels@bs.ch", "orhan.saeedi@bs.ch",
               "nicolas.maire@bs.ch", "rstam.aloush@bs.ch", "renato.farruggio@bs.ch"],
     'email_on_failure': True,
-    'email_on_retry': False,
-    'retries': 0,
-    'retry_delay': timedelta(minutes=3)
+    'email_on_retry': True,
+    'retries': 1,
+    'retry_delay': timedelta(minutes=2)
 }
 
 with DAG('bafu_hydro_daten', default_args=default_args, schedule_interval="*/5 * * * *", catchup=False) as dag:
