@@ -38,7 +38,7 @@ with DAG('fgi_geodatenshop', default_args=default_args, schedule_interval='*/30 
         tty=True,
         mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind"),
                 Mount(source="/mnt/OGD-DataExch/StatA/harvesters/FGI",
-                      target="/code/data-processing/fgi_geodatenshop/data_harvester", type="bind")]
+                      target="/code/data-processing/fgi_geodatenshop/data", type="bind")]
     )
 
     ods_harvest = DockerOperator(
