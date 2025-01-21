@@ -34,6 +34,9 @@ with DAG('stata_befragungen', default_args=default_args, schedule_interval="5,35
         network_mode="bridge",
         tty=True,
         mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind"),
-                Mount(source="/mnt/OGD-DataExch/StatA/Befragungen",
-                      target="/code/data-processing/stata_befragungen/data_orig", type="bind")]
+                Mount(source="/mnt/OGD-DataExch/StatA/Befragungen/55plus_Ablage_StatA",
+                      target="/code/data-processing/stata_befragungen/data_orig/55plus", type="bind"),
+                Mount(source="/mnt/OGD-DataExch/StatA/Befragungen/55plus_OGD",
+                      target="/code/data-processing/stata_befragungen/data/55plus", type="bind")
+                ]
     )
