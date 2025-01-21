@@ -28,7 +28,7 @@ with DAG('stata_befragungen', default_args=default_args, schedule_interval="5,35
         image='stata_befragungen:latest',
         api_version='auto',
         auto_remove='force',
-        command='python3 -m stata_befragungen.etl',
+        command='python3 -m stata_befragungen.src.etl',
         container_name='stata_befragungen--upload',
         docker_url="unix://var/run/docker.sock",
         network_mode="bridge",
