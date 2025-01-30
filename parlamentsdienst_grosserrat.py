@@ -31,7 +31,7 @@ default_args = {
     'retry_delay': timedelta(minutes=15)
 }
 
-with DAG('parlamentsdienst_grosserrat', default_args=default_args, schedule_interval='0 8/12 * * *',
+with DAG('parlamentsdienst_grosserrat', default_args=default_args, schedule_interval='*/15 * * * *',
          catchup=False) as dag:
     dag.doc_md = __doc__
     upload = DockerOperator(
