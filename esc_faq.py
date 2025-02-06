@@ -36,6 +36,6 @@ with DAG('esc_faq', default_args=default_args, schedule_interval='*/5 * * * *',
         network_mode="bridge",
         tty=True,
         mounts=[Mount(source="/data/dev/workspace/data-processing", target="/code/data-processing", type="bind"),
-                Mount(source="/mnt/OGD-DataExch/PD-ESC-FAQ",
+                Mount(source="/mnt/OGD-DataExch/PD-ESC-FAQ/FAQs",
                       target="/code/data-processing/esc_faq/data_orig", type="bind")]
     )
