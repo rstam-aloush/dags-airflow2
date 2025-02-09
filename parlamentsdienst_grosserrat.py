@@ -24,15 +24,14 @@ default_args = {
     'description': 'Run the parlamentsdienst_grosserrat docker container',
     'depend_on_past': False,
     'start_date': datetime(2024, 2, 2),
-    'email': ["jonas.bieri@bs.ch", "jonas.eckenfels@bs.ch", "orhan.saeedi@bs.ch",
-              "nicolas.maire@bs.ch", "rstam.aloush@bs.ch", "renato.farruggio@bs.ch"],
+    'email': ["jonas.bieri@bs.ch", "orhan.saeedi@bs.ch", "rstam.aloush@bs.ch", "renato.farruggio@bs.ch"],
     'email_on_failure': True,
     'email_on_retry': False,
     'retries': 0,
     'retry_delay': timedelta(minutes=15)
 }
 
-with DAG('parlamentsdienst_grosserrat', default_args=default_args, schedule_interval='0 8/12 * * *',
+with DAG('parlamentsdienst_grosserrat', default_args=default_args, schedule_interval='*/5 * * * *',
          catchup=False) as dag:
     dag.doc_md = __doc__
     upload = DockerOperator(

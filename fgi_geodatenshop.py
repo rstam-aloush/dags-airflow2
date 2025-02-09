@@ -15,8 +15,7 @@ default_args = {
     'description': 'Run the fgi_geodatenshop docker container',
     'depend_on_past': False,
     'start_date': datetime(2024, 9, 25),
-    'email': ["jonas.bieri@bs.ch", "jonas.eckenfels@bs.ch", "orhan.saeedi@bs.ch",
-               "nicolas.maire@bs.ch", "rstam.aloush@bs.ch", "renato.farruggio@bs.ch"],
+    'email': ["jonas.bieri@bs.ch", "orhan.saeedi@bs.ch", "rstam.aloush@bs.ch", "renato.farruggio@bs.ch"],
     'email_on_failure': True,
     'email_on_retry': False,
     'retries': 0,
@@ -24,7 +23,7 @@ default_args = {
 }
 
 
-with DAG('fgi_geodatenshop', default_args=default_args, schedule_interval='*/30 * * * *', catchup=False) as dag:
+with DAG('fgi_geodatenshop', default_args=default_args, schedule_interval='0 */2 * * *', catchup=False) as dag:
     dag.doc_md = __doc__
     upload = DockerOperator(
         task_id='upload',
